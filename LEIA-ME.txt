@@ -1,0 +1,12 @@
+ESTUDA SUZANO | GITHUB PAGES
+
+1. Extraia este ZIP.
+2. Envie os arquivos extraídos para a raiz do repositório. O index.html deve ficar no primeiro nível.
+3. No GitHub, abra Settings > Pages e selecione Deploy from a branch.
+4. Selecione main e /(root), salve e aguarde o endereço aparecer em Settings > Pages.
+
+O arquivo .nojekyll já vem no pacote. O painel também abre localmente com dois cliques em index.html.
+O progresso fica no navegador e é separado entre o arquivo local e o site publicado.
+As provas anteriores são acessadas pelos links em Provas e fontes e exigem internet.
+
+Conteúdo: 250 questões com gabarito comentado, incluindo 40 avançadas, checklist com 41 tópicos e simulados de 34 questões.
