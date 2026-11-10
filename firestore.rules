@@ -1,0 +1,38 @@
+rules_version = '2';
+
+// Regras do Firestore para o Estuda Suzano.
+// Troque o e-mail abaixo pelo(s) mesmo(s) e-mail(s) de window.ADMIN_EMAILS em firebase-config.js
+// e publique em: Console do Firebase > Firestore Database > Regras.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['seu-email-de-admin@gmail.com'];
+    }
+
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // Cadastro de cada pessoa. Só o admin muda o campo "status" (pending · approved · blocked).
+    match /users/{uid} {
+      allow read: if isSelf(uid) || isAdmin();
+      allow create: if isSelf(uid) && request.resource.data.status == 'pending';
+      allow update: if isAdmin()
+        || (isSelf(uid) && request.resource.data.status == resource.data.status);
+      allow delete: if isAdmin();
+    }
+
+    // Progresso de estudo (videoaulas concluídas, respostas, simulado).
+    match /progress/{uid} {
+      allow read: if isSelf(uid) || isAdmin();
+      allow write: if isSelf(uid);
+    }
+  }
+}
