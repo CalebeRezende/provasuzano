@@ -1,5 +1,5 @@
-import React from 'react';
-import { adminContato } from './backend.js';
+import React, { useState } from 'react';
+import { adminContato, compraUrl } from './backend.js';
 
 const paths = {
   home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
@@ -18,6 +18,9 @@ const paths = {
   back: 'M19 12H5M11 18l-6-6 6-6',
   spark: 'M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6',
   users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+  cart: 'M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6M10 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
+  minus: 'M5 12h14',
+  bulb: 'M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z',
   cloud: 'M17.5 19H7a5 5 0 1 1 .9-9.92A6 6 0 0 1 19 11a4 4 0 0 1-1.5 8z',
   flag: 'M4 22V4M4 4h13l-2 4 2 4H4',
   trophy: 'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3',
@@ -83,6 +86,7 @@ export function LockedNotice({ status, compact = false }) {
           {adminContato ? <> · <span className="contato">{adminContato}</span></> : '.'}
           {!compact && ' Assim que ele aprovar, esta página libera tudo automaticamente — não precisa sair nem recarregar.'}
         </p>
+        {!blocked && <a className="btn buy sm" href={compraUrl} target="_blank" rel="noreferrer"><Icon name="cart" size={15} /> Comprar acesso completo</a>}
       </div>
     </div>
   );
@@ -99,4 +103,46 @@ export function LockedOverlay({ status, children }) {
 
 export function Empty({ children }) {
   return <div className="empty">{children}</div>;
+}
+
+const BENEFICIOS = ['64 temas do edital com videoaulas', '250 questões com gabarito comentado', 'Simulados de 34 questões', 'Provas anteriores da banca'];
+
+/** Anúncio grande da tela inicial para quem ainda está no acesso grátis. */
+export function PromoCard() {
+  return (
+    <section className="promo" aria-label="Liberar acesso completo">
+      <div className="promo-text">
+        <span className="promo-tag">Acesso completo</span>
+        <h2>Para liberar o cadastro completo, faça a compra</h2>
+        <ul>{BENEFICIOS.map((b) => <li key={b}><Icon name="check" size={15} stroke={3} /> {b}</li>)}</ul>
+        <p className="promo-note">Na compra, use o mesmo e-mail Google com que você entrou aqui. Depois da confirmação o administrador libera seu acesso.</p>
+      </div>
+      <div className="promo-cta">
+        <a className="btn buy lg" href={compraUrl} target="_blank" rel="noreferrer"><Icon name="cart" size={18} /> Comprar acesso completo</a>
+        <a className="promo-link" href={compraUrl} target="_blank" rel="noreferrer">{compraUrl.replace(/^https?:\/\//, '')}</a>
+      </div>
+    </section>
+  );
+}
+
+/** "Folderzinho" flutuante, minimizável, nas outras telas do acesso grátis. */
+export function PromoFloat() {
+  const KEY = 'estuda-suzano-promo-min';
+  const [min, setMin] = useState(() => { try { return localStorage.getItem(KEY) === '1'; } catch { return false; } });
+  const set = (v) => { setMin(v); try { localStorage.setItem(KEY, v ? '1' : '0'); } catch { /* ok */ } };
+  if (min) {
+    return (
+      <button className="promo-pill" onClick={() => set(false)} aria-label="Mostrar oferta de acesso completo">
+        <Icon name="lock" size={16} /> Liberar acesso completo
+      </button>
+    );
+  }
+  return (
+    <aside className="promo-float" aria-label="Liberar acesso completo">
+      <button className="promo-min" onClick={() => set(true)} aria-label="Minimizar"><Icon name="minus" size={16} stroke={3} /></button>
+      <strong>Libere o cadastro completo</strong>
+      <p>Todos os temas, questões e simulados. Faça a compra e o administrador libera seu acesso.</p>
+      <a className="btn buy sm" href={compraUrl} target="_blank" rel="noreferrer"><Icon name="cart" size={15} /> Comprar agora</a>
+    </aside>
+  );
 }

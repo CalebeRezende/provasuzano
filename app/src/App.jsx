@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import * as api from './backend.js';
 import conteudo from './data/conteudo.json';
 import { disciplinas, todosItens } from './data/videoaulas.js';
-import { Icon, GoogleLogo, Ring, Bar, LockedNotice, LockedOverlay, Empty } from './ui.jsx';
+import { Icon, GoogleLogo, Ring, Bar, LockedNotice, LockedOverlay, Empty, PromoCard, PromoFloat } from './ui.jsx';
+import { estudoPara } from './data/estudo.js';
 
 const { bank, groups, exams, sources } = conteudo;
 const LETTERS = 'ABCDE';
@@ -72,6 +73,7 @@ function LoginScreen() {
           </div>
         )}
         <p className="fine">Ao entrar, seu cadastro fica pendente até o administrador liberar o acesso completo. Antes disso, você pode ver uma amostra do conteúdo.</p>
+        <p className="fine">Quer o acesso completo? <a href={api.compraUrl} target="_blank" rel="noreferrer">Faça a compra aqui</a>.</p>
       </main>
     </div>
   );
@@ -195,6 +197,7 @@ function Shell({ user, profile }) {
           </>
         )}
       </main>
+      {!full && status !== 'blocked' && current !== 'inicio' && <PromoFloat />}
       <footer className="footer">
         Estuda Suzano · material de estudo independente, sem vínculo com a Prefeitura de Suzano ou o Instituto Nosso Rumo. Confira sempre o edital oficial.
       </footer>
@@ -268,7 +271,7 @@ function Home({ user, profile, progress, full, go }) {
         </div>
       </section>
 
-      {!full && <LockedNotice status={profile.status} />}
+      {!full && (profile.status === 'blocked' ? <LockedNotice status={profile.status} /> : <PromoCard />)}
 
       <section className="stat-grid">
         <div className="stat"><span className="stat-ico violet"><Icon name="play" /></span><div><strong>{s.done}<small> / {s.total}</small></strong><span>Temas concluídos</span></div></div>
@@ -319,8 +322,8 @@ function Home({ user, profile, progress, full, go }) {
 /* ================================================================== */
 function Videoaulas({ progress, update, full, status }) {
   const [disc, setDisc] = useState('');
-  const [filter, setFilter] = useState('pendentes');
   const [openId, setOpenId] = useState(() => { const v = sessionStorage.getItem('open-item'); sessionStorage.removeItem('open-item'); return v; });
+  const [filter, setFilter] = useState(() => (openId ? 'todas' : 'pendentes'));
   const checks = progress.checks || {};
   const done = todosItens.filter((i) => checks[i.id]).length;
 
@@ -466,10 +469,13 @@ function QuestionCard({ q, selected, reveal, order = NATURAL, onPick, onSubmit, 
         })}
       </fieldset>
       {reveal ? (
-        <div className={'feedback' + (right ? ' ok' : ' err')} role="status">
-          <strong>{right ? '✓ Correto!' : `Gabarito: ${LETTERS[order.indexOf(q.answer)]}`}</strong>
-          <p>{q.comment}</p>
-        </div>
+        <>
+          <div className={'feedback' + (right ? ' ok' : ' err')} role="status">
+            <strong>{right ? '✓ Correto!' : `Gabarito: ${LETTERS[order.indexOf(q.answer)]}`}</strong>
+            <p>{q.comment}</p>
+          </div>
+          {!right && <StudyTip q={q} />}
+        </>
       ) : onSubmit && (
         <button className="btn primary" type="submit" disabled={choice === undefined}>{submitLabel}</button>
       )}
@@ -620,6 +626,7 @@ function Simulado({ progress, update }) {
           </div>
           <Ring value={hits} max={items.length} tone="light" size={120} />
         </section>
+        <StudyPlan questions={items.filter((q) => sim.picks[q.id] !== q.answer)} />
         <section className="stat-grid">
           {groups.map((g) => {
             const gi = items.filter((q) => q.group === g);
@@ -636,6 +643,7 @@ function Simulado({ progress, update }) {
               <p>{q.prompt}</p>
               <p><b>{LETTERS[order.indexOf(q.answer)]}. {q.options[q.answer]}</b></p>
               <p className="muted">{q.comment}</p>
+              {pick !== q.answer && <StudyTip q={q} />}
             </details>
           );
         })}
@@ -802,3 +810,72 @@ function Admin({ me }) {
 
 function toMs(t) { if (!t) return 0; if (typeof t === 'number') return t; if (t.toMillis) return t.toMillis(); if (t.seconds) return t.seconds * 1000; return 0; }
 function fmtDate(t) { const ms = toMs(t); return ms ? new Date(ms).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '—'; }
+
+/* ================================================================== */
+/* Sugestões de estudo para questões erradas                           */
+/* ================================================================== */
+function openLesson(id) {
+  sessionStorage.setItem('open-item', id);
+  if (location.hash === '#/videoaulas') window.dispatchEvent(new HashChangeEvent('hashchange'));
+  location.hash = '#/videoaulas';
+}
+
+function StudyTip({ q }) {
+  const { item, leituras } = estudoPara(q);
+  const video = item.videos[0];
+  return (
+    <div className="study-tip">
+      <div className="study-tip-head"><Icon name="bulb" size={18} /> <strong>Para acertar da próxima vez</strong></div>
+      <p>Revise o tema <b>{item.titulo}</b> ({item.disciplinaNome}).</p>
+      <div className="study-links">
+        {video && (
+          <a className="study-link video" href={'https://www.youtube.com/watch?v=' + video.id} target="_blank" rel="noreferrer">
+            <Icon name="play" size={14} /> <span>Assistir: {video.title}</span>
+          </a>
+        )}
+        {leituras.map((l) => (
+          <a key={l.titulo} className="study-link read" href={l.url} target="_blank" rel="noreferrer">
+            <Icon name="book" size={14} /> <span>Ler: {l.titulo}</span>
+          </a>
+        ))}
+        <button type="button" className="study-link open" onClick={() => openLesson(item.id)}>
+          <Icon name="arrow" size={14} /> <span>Abrir o tema nas videoaulas</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function StudyPlan({ questions }) {
+  const temas = [];
+  const seen = new Map();
+  questions.forEach((q) => {
+    const e = estudoPara(q);
+    if (seen.has(e.item.id)) seen.get(e.item.id).n += 1;
+    else { const t = { ...e, n: 1 }; seen.set(e.item.id, t); temas.push(t); }
+  });
+  if (!temas.length) return null;
+  temas.sort((a, b) => b.n - a.n);
+  return (
+    <section className="card study-plan">
+      <h2 className="card-title"><Icon name="bulb" size={18} /> O que estudar a partir deste simulado</h2>
+      <p className="muted small">Temas das questões que você errou ou deixou em branco, do que mais apareceu para o que menos apareceu.</p>
+      <div className="plan-list">
+        {temas.map(({ item, leituras, n }) => (
+          <div key={item.id} className="plan-row">
+            <div className="plan-info">
+              <span className={'chip ' + item.cor}>{item.disciplinaNome}</span>
+              <strong>{item.titulo}</strong>
+              <small className="muted">{n} {n === 1 ? 'questão' : 'questões'} para rever</small>
+            </div>
+            <div className="plan-actions">
+              {item.videos[0] && <a className="btn ghost sm" href={'https://www.youtube.com/watch?v=' + item.videos[0].id} target="_blank" rel="noreferrer"><Icon name="play" size={14} /> Vídeo</a>}
+              <a className="btn ghost sm" href={leituras[0].url} target="_blank" rel="noreferrer"><Icon name="book" size={14} /> Leitura</a>
+              <button className="btn primary sm" onClick={() => openLesson(item.id)}>Estudar tema</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
