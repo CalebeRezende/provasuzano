@@ -18,6 +18,7 @@ const isLocal = ['localhost', '127.0.0.1', ''].includes(location.hostname) || lo
 export const mode = configured ? 'firebase' : isLocal ? 'demo' : 'setup';
 export const adminEmails = (window.ADMIN_EMAILS || []).map((e) => String(e).trim().toLowerCase()).filter((e) => e && !e.startsWith('seu-email'));
 export const adminContato = window.ADMIN_CONTATO || '';
+export const compraUrl = window.COMPRA_URL || 'https://loja.infinitepay.io/calebe-macena-rezende/tll3719-estuda-suzano';
 
 export const emptyProgress = () => ({ checks: {}, watched: {}, answers: {}, sim: null, lastSimIds: [], simHistory: [] });
 

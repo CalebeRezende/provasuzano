@@ -393,3 +393,66 @@ legend { font-size: 1.12rem; font-weight: 700; margin-bottom: 12px; line-height:
   .login-card { padding: 28px 22px; }
   .access-banner { font-size: .84rem; }
 }
+
+/* ---------- Anúncio de compra ---------- */
+.btn.buy { background: linear-gradient(135deg, #16a34a, #059669); color: #fff; box-shadow: 0 10px 22px -10px rgba(5, 150, 105, .9); }
+.btn.buy:hover { filter: brightness(1.06); }
+.btn.lg { padding: 15px 24px; font-size: 1.08rem; border-radius: 14px; }
+.locked-notice .btn.buy { margin-top: 10px; }
+.promo {
+  position: relative; overflow: hidden; display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: center;
+  padding: 28px 30px; border-radius: 24px; color: #fff;
+  background: radial-gradient(circle at 85% 20%, rgba(255, 255, 255, .22), transparent 40%), linear-gradient(135deg, #f97316 0%, #ef4444 45%, #db2777 100%);
+  box-shadow: 0 24px 50px -24px rgba(239, 68, 68, .8); border: 2px solid rgba(255, 255, 255, .35);
+}
+.promo-tag { display: inline-block; background: rgba(255, 255, 255, .22); padding: 4px 12px; border-radius: 99px; font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+.promo h2 { font-size: clamp(1.3rem, 2.6vw, 1.75rem); line-height: 1.2; font-weight: 800; margin-bottom: 12px; }
+.promo ul { list-style: none; padding: 0; margin: 0 0 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.promo li { display: flex; gap: 8px; align-items: center; font-weight: 600; font-size: .95rem; }
+.promo li .icon { background: rgba(255, 255, 255, .25); border-radius: 50%; padding: 3px; width: 22px; height: 22px; }
+.promo-note { font-size: .86rem; opacity: .92; }
+.promo-cta { display: grid; gap: 10px; justify-items: center; background: rgba(255, 255, 255, .14); border-radius: 18px; padding: 22px 18px; }
+.promo-cta .btn.buy { width: 100%; background: #fff; color: #b91c1c; box-shadow: 0 12px 26px -12px rgba(0, 0, 0, .5); }
+.promo-link { color: #fff; font-size: .78rem; opacity: .9; text-align: center; overflow-wrap: anywhere; text-decoration: underline; }
+.promo-float {
+  position: fixed; right: 20px; bottom: 20px; z-index: 35; width: 290px; padding: 18px 18px 16px; border-radius: 20px; color: #fff; display: grid; gap: 8px;
+  background: linear-gradient(135deg, #f97316, #ef4444 55%, #db2777); box-shadow: 0 22px 44px -16px rgba(185, 28, 28, .75); border: 2px solid rgba(255, 255, 255, .4);
+  animation: pop .35s ease;
+}
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.96); } }
+.promo-float strong { font-size: 1.05rem; padding-right: 26px; }
+.promo-float p { font-size: .86rem; opacity: .95; }
+.promo-float .btn.buy { background: #fff; color: #b91c1c; justify-self: start; }
+.promo-min { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; border-radius: 8px; border: 0; background: rgba(255, 255, 255, .22); color: #fff; display: grid; place-items: center; }
+.promo-min:hover { background: rgba(255, 255, 255, .35); }
+.promo-pill {
+  position: fixed; right: 20px; bottom: 20px; z-index: 35; display: inline-flex; align-items: center; gap: 8px; border: 2px solid rgba(255, 255, 255, .5);
+  padding: 10px 16px; border-radius: 99px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #f97316, #ef4444); box-shadow: 0 12px 28px -10px rgba(185, 28, 28, .8);
+}
+
+/* ---------- Sugestão de estudo ---------- */
+.study-tip { border: 1.5px solid color-mix(in srgb, var(--amber) 45%, transparent); background: var(--amber-soft); border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; }
+.study-tip-head { display: flex; align-items: center; gap: 8px; color: var(--amber); }
+.study-tip p { color: var(--ink-2); font-size: .94rem; }
+.study-links { display: grid; gap: 6px; }
+.study-link { display: flex; align-items: flex-start; gap: 8px; padding: 8px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: .9rem; text-align: left; text-decoration: none !important; }
+.study-link .icon { margin-top: 3px; }
+.study-link:hover { border-color: var(--brand); }
+.study-link.video .icon { color: #ef4444; }
+.study-link.read .icon { color: var(--blue); }
+.study-link.open { color: var(--brand); }
+.study-plan .card-title { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+.study-plan .card-title .icon { color: var(--amber); }
+.plan-list { display: grid; gap: 8px; margin-top: 14px; }
+.plan-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-2); }
+.plan-info { display: grid; gap: 3px; }
+.plan-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+@media (max-width: 760px) {
+  .promo { grid-template-columns: 1fr; padding: 22px 18px; }
+  .promo ul { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .promo-float { left: 12px; right: 12px; width: auto; bottom: calc(76px + env(safe-area-inset-bottom)); }
+  .promo-pill { right: 12px; bottom: calc(76px + env(safe-area-inset-bottom)); }
+}
