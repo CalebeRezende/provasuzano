@@ -21,4 +21,4 @@ window.ADMIN_EMAILS = ['calebemrnos@gmail.com'];
 
 // 3) Contato exibido para quem ainda não tem acesso completo (WhatsApp, e-mail...).
 //    Deixe vazio ('') para mostrar apenas "converse com o administrador".
-window.ADMIN_CONTATO = '';
+window.ADMIN_CONTATO = '(11977991447';
