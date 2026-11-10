@@ -1,14 +1,25 @@
-ESTUDA SUZANO | GITHUB PAGES
+ESTUDA SUZANO 2.0 | GITHUB PAGES
 
-1. Extraia este ZIP.
-2. Envie os arquivos extraídos para a raiz do repositório. O index.html deve ficar no primeiro nível.
-3. No GitHub, abra Settings > Pages e selecione Deploy from a branch.
-4. Selecione main e /(root), salve e aguarde o endereço aparecer em Settings > Pages.
+Novidades
+- Visual novo, com painel de progresso, modo escuro automático e versão para celular.
+- Aba Videoaulas: os 64 temas do conteúdo programático do Edital 02/2026 viraram pendências,
+  cada um com videoaulas selecionadas, botão "buscar mais vídeos" e "marcar como estudado".
+- Login com Google. Quem entra fica "aguardando" até o administrador liberar o acesso completo.
+  Antes disso a pessoa vê só a amostra (2 temas e 10 questões) e o aviso para falar com o admin.
+- Progresso (temas, respostas e simulados) salvo na conta, em qualquer aparelho.
+- Aba Admin para liberar, bloquear e acompanhar o progresso de cada pessoa.
 
-O arquivo .nojekyll já vem no pacote. O painel também abre localmente com dois cliques em index.html.
-O progresso fica no navegador e é separado entre o arquivo local e o site publicado.
-Os vídeos e as provas anteriores exigem internet. Para assistir no painel, abra um tópico no Checklist e selecione Carregar vídeo aqui. Se o YouTube restringir o player, use Abrir no YouTube. Para legislação, confira o texto atualizado em Provas e fontes.
+Publicação
+1. GitHub > Settings > Pages > Deploy from a branch > main > /(root). (Igual antes.)
+2. Configure o login seguindo CONFIGURAR-LOGIN.md (Firebase, ~10 minutos).
+   Enquanto não configurar, o site mostra a tela "Quase lá".
 
-Cada novo simulado embaralha questões e alternativas e prioriza itens ausentes da tentativa anterior, dentro do nível escolhido. Ao retomar um simulado já iniciado, o painel mantém a ordem e as respostas. No nível avançado, há 10 questões específicas para 10 vagas no simulado, então essas questões reaparecem em outra ordem.
+Arquivos
+- index.html, assets/ ........ site gerado (não editar à mão)
+- firebase-config.js ......... chaves do Firebase, e-mails de admin e contato (editar no GitHub)
+- firestore.rules ............ regras de segurança (colar no Firebase)
+- app/ ....................... código-fonte React (npm run build regenera o site)
+- Questoes-para-imprimir.html, Gabarito-comentado.html, Acervo-e-fontes.html ... material para imprimir
 
-Conteúdo: 250 questões com gabarito comentado, incluindo 40 avançadas, checklist com 41 tópicos e simulados de 34 questões.
+Conteúdo: 250 questões com gabarito comentado (40 avançadas), 64 temas com videoaulas,
+simulados de 34 questões (8 Português, 8 Matemática, 8 Legislação, 10 Específicos).
