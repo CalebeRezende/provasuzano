@@ -7,12 +7,12 @@
 // 1) Cole aqui o objeto "firebaseConfig" do seu projeto Firebase
 //    (Console do Firebase > Configurações do projeto > Seus apps > App da Web).
 window.FIREBASE_CONFIG = {
-  apiKey: 'COLE_AQUI',
-  authDomain: 'SEU-PROJETO.firebaseapp.com',
-  projectId: 'SEU-PROJETO',
-  storageBucket: 'SEU-PROJETO.appspot.com',
-  messagingSenderId: '000000000000',
-  appId: 'COLE_AQUI',
+  apiKey: 'AIzaSyChsfUHgcIf4g24MZdo9QyTBwIuTMBQf5c',
+  authDomain: 'estuda-suzano.firebaseapp.com',
+  projectId: 'estuda-suzano',
+  storageBucket: 'estuda-suzano.firebasestorage.app',
+  messagingSenderId: '333968024213',
+  appId: '1:333968024213:web:cfe7538ad0b71f7e78b19c',
 };
 
 // 2) E-mail(s) Google de quem administra o site (libera ou bloqueia acessos).
