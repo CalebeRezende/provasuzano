@@ -1,0 +1,14 @@
+ESTUDA SUZANO | GITHUB PAGES
+
+1. Extraia este ZIP.
+2. Envie os arquivos extraídos para a raiz do repositório. O index.html deve ficar no primeiro nível.
+3. No GitHub, abra Settings > Pages e selecione Deploy from a branch.
+4. Selecione main e /(root), salve e aguarde o endereço aparecer em Settings > Pages.
+
+O arquivo .nojekyll já vem no pacote. O painel também abre localmente com dois cliques em index.html.
+O progresso fica no navegador e é separado entre o arquivo local e o site publicado.
+Os vídeos e as provas anteriores exigem internet. Para assistir no painel, abra um tópico no Checklist e selecione Carregar vídeo aqui. Se o YouTube restringir o player, use Abrir no YouTube. Para legislação, confira o texto atualizado em Provas e fontes.
+
+Cada novo simulado embaralha questões e alternativas e prioriza itens ausentes da tentativa anterior, dentro do nível escolhido. Ao retomar um simulado já iniciado, o painel mantém a ordem e as respostas. No nível avançado, há 10 questões específicas para 10 vagas no simulado, então essas questões reaparecem em outra ordem.
+
+Conteúdo: 250 questões com gabarito comentado, incluindo 40 avançadas, checklist com 41 tópicos e simulados de 34 questões.
