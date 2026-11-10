@@ -17,7 +17,7 @@ window.FIREBASE_CONFIG = {
 
 // 2) E-mail(s) Google de quem administra o site (libera ou bloqueia acessos).
 //    Use exatamente os mesmos e-mails no arquivo firestore.rules.
-window.ADMIN_EMAILS = ['seu-email-de-admin@gmail.com'];
+window.ADMIN_EMAILS = ['calebemrnos@gmail.com'];
 
 // 3) Contato exibido para quem ainda não tem acesso completo (WhatsApp, e-mail...).
 //    Deixe vazio ('') para mostrar apenas "converse com o administrador".
